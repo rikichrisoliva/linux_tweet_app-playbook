@@ -1,0 +1,30 @@
+---
+- name: create openssl directory
+  file:
+    path: "{{ openssldir }}"
+    state: directory
+    owner: rikichrisoliva
+    group: rikichrisoliva
+    mode: '0755'
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  community.crypto.openssl_privatekey:
+    path: "{{ openssldir }}/key.pem"
+
+- name: Create certificate signing request (CSR) for self-signed certificate
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: "{{ openssldir }}/key.pem"
+    common_name: 20.216.132.6
+    organization_name: NGINX RIKI
+    country_name: US
+    email_address: rikichrisoliva@gmail.com
+    subject_alt_name:
+      - "DNS:20.216.132.6"
+  register: csr
+
+- name: Create self-signed certificate from CSR
+  community.crypto.x509_certificate:
+    path: "{{ openssldir }}/localhost.pem"
+    csr_content: "{{ csr.csr }}"
+    privatekey_path: "{{ openssldir }}/key.pem"
+    provider: selfsigned

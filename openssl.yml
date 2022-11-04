@@ -1,0 +1,7 @@
+---
+- hosts: servers
+  roles:
+    - openssl
+  tags: openssl
+  vars:
+    - openssldir: /var/tmp/openssl

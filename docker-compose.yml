@@ -1,0 +1,7 @@
+---
+- hosts: servers
+  roles:
+    - docker-compose
+  tags: docker-compose
+  vars_files:
+    - roles/docker-compose/vars/docker-compose_vars 

@@ -1,0 +1,17 @@
+---
+- name: Run docker-compose
+  docker_compose:
+    project_name: docker-compose
+    definition:
+      version: '3'
+      services:
+        myapp:
+          image: linux_tweet_app
+        myproxy:
+          container_name: myproxy
+          image: myproxy
+          ports:
+            - 80:80
+            - 443:443
+          volumes:
+            - "{{ openssldir }}:/etc/nginx/certs"

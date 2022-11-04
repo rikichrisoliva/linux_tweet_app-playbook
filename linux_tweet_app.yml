@@ -1,0 +1,5 @@
+---
+- hosts: servers
+  roles:
+    - linux_tweet_app
+  tags: linux_tweet_app

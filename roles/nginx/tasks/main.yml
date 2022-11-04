@@ -1,0 +1,29 @@
+---
+- name: create build directory
+  file:
+    path: /var/tmp/nginx
+    state: directory
+    owner: rikichrisoliva
+    group: rikichrisoliva
+    mode: '0755'
+- name: copy Dockerfile
+  copy:
+    src: Dockerfile
+    dest: /var/tmp/nginx/Dockerfile
+    owner: rikichrisoliva
+    group: rikichrisoliva
+    mode: '0644'
+- name: copy nginx.conf
+  copy:
+    src: nginx.conf
+    dest: /var/tmp/nginx/nginx.conf
+    owner: rikichrisoliva
+    group: rikichrisoliva
+    mode: '0644'
+- name: build container image
+  docker_image:
+    name: myproxy
+    source: build
+    build:
+      path: /var/tmp/nginx
+    state: present
