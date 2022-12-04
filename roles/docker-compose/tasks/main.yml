@@ -8,7 +8,7 @@
         myapp:
           image: linux_tweet_app
         myproxy:
-          container_name: myproxy
+          container_name: myproxyy
           image: myproxy
           ports:
             - 80:80
